@@ -94,6 +94,11 @@ class TimeSheetCreateView(LoginRequiredMixin, CreateView):
     template_name = 'projects/time_sheet_create.html'
     success_url = reverse_lazy('projects:time_sheet_dashboard')
 
+    def get_form_kwargs(self):
+        kwargs = super(TimeSheetCreateView, self).get_form_kwargs()
+        kwargs['request_user'] = self.request.user
+        return kwargs
+
     def form_valid(self, form):
         self.object = form.save()
         self.object.created_by = self.request.user

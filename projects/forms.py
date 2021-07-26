@@ -1,6 +1,5 @@
 from django import forms
 from django.contrib.auth import get_user_model
-from django.forms import DateInput, fields
 
 from projects.models import Project, Task, TimeSheet
 
@@ -19,7 +18,6 @@ class ProjectCreateForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super(ProjectCreateForm, self).clean()
-        error_dict = {}
         return cleaned_data
 
     def save(self, commit=True):
@@ -47,7 +45,6 @@ class TaskCreateForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super(TaskCreateForm, self).clean()
-        error_dict = {}
         return cleaned_data
 
     def save(self, commit=True):
@@ -70,9 +67,13 @@ class TimeSheetCreateForm(forms.ModelForm):
             'end_time',
         )
 
+    def __init__(self, *args, **kwargs):
+        self.request_user = kwargs.pop("request_user", None)
+        super(TimeSheetCreateForm, self).__init__(*args, **kwargs)
+        self.fields["task"].queryset = Task.objects.filter(assigned_to=self.request_user)
+
     def clean(self):
         cleaned_data = super(TimeSheetCreateForm, self).clean()
-        error_dict = {}
         return cleaned_data
 
     def save(self, commit=True):
