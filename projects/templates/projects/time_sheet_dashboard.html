@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+<br>
+{% block content %}
+    <br>
+    <table border="color:black">
+        <tr>
+            <th>Project Name</th>
+            <th>Task Name</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Duration</th>
+            <th>Created</th>
+        </tr>
+        {% for time_sheet in time_sheet_list %}
+            <tr>
+                <td>
+                    <a href="{% url "projects:time_sheet_update" time_sheet.id %}">{{ time_sheet.task.project.name }}</a>
+                </td>
+                <td>{{ time_sheet.task.name }}</td>
+                <td>{{ time_sheet.start_time }}</td>
+                <td>{{ time_sheet.end_time }}</td>
+                <td>{{ time_sheet.duration }}</td>
+                <td>{{ time_sheet.created }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

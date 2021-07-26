@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+<br>
+{% block content %}
+    <br>
+    <table border="color:black">
+        <tr>
+            <th>Project Name</th>
+            <th>Created By</th>
+            <th>Created</th>
+            {% if request.user.is_admin or request.user.is_superuser %}
+                <th>Delete</th>
+            {% endif %}
+        </tr>
+        {% for project in project_list %}
+            <tr>
+                {% if request.user.is_admin or request.user.is_superuser %}
+                    <td><a href="{% url "projects:project_update" project.id %}">{{ project.name }}</a></td>
+                {% else %}
+                    <td>{{ project.name }}</td>
+                {% endif %}
+                <td>{{ project.created_by.name }}</td>
+                <td>{{ project.created }}</td>
+                {% if request.user.is_admin or request.user.is_superuser %}
+                    <td><a href="{% url "projects:project_delete" project.id %}">Delete</a></td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

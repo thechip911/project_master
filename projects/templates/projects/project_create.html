@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+<br>
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form.visible_fields %}
+            <div class="form-row">
+                <div class="form-group col-12">
+                    {{ field.label_tag }}
+                    <div class="form-input">
+                        {{ field }}
+                    </div>
+                    {% if field.help_text %}
+                        <small class="form-text text-muted">{{ field.help_text|safe }}</small>
+                    {% endif %}
+                    {% if field.errors %}
+                        <small class="form-text text-danger">{{ field.errors }}</small>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+        <div class="form-row">
+            <button class="btn btn-block btn-theme-secondary" type="submit" name="button"> Submit</button>
+        </div>
+    </form>
+{% endblock %}

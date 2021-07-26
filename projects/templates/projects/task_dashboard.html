@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+<br>
+{% block content %}
+    <br>
+    <table border="color:black">
+        <tr>
+            <th>Task Name</th>
+            <th>Due Date</th>
+            <th>Task Status</th>
+            <th>Task Priority</th>
+            <th>Total Task Duration</th>
+            <th>Created By</th>
+            <th>Project Name</th>
+            <th>Created</th>
+            {% if request.user.is_admin or request.user.is_superuser %}
+                <th>Delete</th>
+            {% endif %}
+        </tr>
+        {% for task in task_list %}
+            <tr>
+                {% if request.user.is_admin or request.user.is_superuser %}
+                    <td><a href="{% url "projects:task_update" task.id %}">{{ task.name }}</a></td>
+                {% else %}
+                    <td>{{ task.name }}</td>
+                {% endif %}
+                <td>{{ task.due_date }}</td>
+                <td>{{ task.task_status }}</td>
+                <td>{{ task.task_priority }}</td>
+                <td>{{ task.total_task_time }}</td>
+                <td>{{ task.created_by.name }}</td>
+                <td>{{ task.project.name }}</td>
+                <td>{{ task.created }}</td>
+                {% if request.user.is_admin or request.user.is_superuser %}
+                    <td><a href="{% url "projects:task_delete" task.id %}">Delete</a></td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

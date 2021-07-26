@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+{% if not request.user.is_anonymous %}
+    Hello {{ request.user.name }}  <a class="primary-color" href="{% url 'accounts:logout' %}">Logout</a>
+    <br> <a class="primary-color" href="{% url 'accounts:user_dashboard' %}">User Dashboard</a>
+    <br> <a class="primary-color" href="{% url 'pages:homepage' %}">HomePage</a>
+    <br> <a class="primary-color" href="{% url 'projects:project_dashboard' %}">Project Dashboard</a>
+
+    {% if request.user.is_admin or request.user.is_superuser %}
+        <br> <a class="primary-color" href="{% url 'projects:project_create' %}">Project Create</a>
+        <br> <a class="primary-color" href="{% url 'projects:task_create' %}">Task Create</a>
+    {% endif %}
+    <br> <a class="primary-color" href="{% url 'projects:task_dashboard' %}">Task DashBoard</a>
+    <br> <a class="primary-color" href="{% url 'projects:time_sheet_create' %}">Task Sheet Create</a>
+    <br> <a class="primary-color" href="{% url 'projects:time_sheet_dashboard' %}">Task Sheet DashBoard</a>
+{% else %}
+    <br> <a href="{% url 'accounts:signup' %}">SignUP</a>
+    <br> <a class="primary-color" href="{% url 'accounts:login' %}"> Please Login</a>
+{% endif %}
+{% block content %} {% endblock %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>
