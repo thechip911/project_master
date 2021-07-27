@@ -1,6 +1,7 @@
 HELP_TEXTS = {
     "IS_PROJECT_ADMIN": "Is the User Admin of the Project",
-    "IS_STAFF": "Is the User Staff"
+    "IS_STAFF": "Is the User Staff",
+    "IS_EMPLOYEE": "Is the User Employee"
 }
 
 SYSTEM_ERR_MSG = {

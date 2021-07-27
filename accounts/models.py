@@ -37,8 +37,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     is_employee = models.BooleanField(
         _('Is Employee'),
-        default=False,
-        help_text=HELP_TEXTS['IS_PROJECT_ADMIN'],
+        default=True,
+        help_text=HELP_TEXTS['IS_EMPLOYEE'],
     )
 
     is_staff = models.BooleanField(
