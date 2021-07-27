@@ -1,10 +1,16 @@
+{% extends "base.html" %}
 {% load static %}
-This is A homepage
-{% if not request.user.is_anonymous %}
-    Hello {{ request.user.name }} <a class="primary-color" href="{% url 'accounts:user_dashboard' %}">User Dashboard</a>
-    <a class="primary-color" href="{% url 'accounts:logout' %}">Logout</a>
-{% else %}
-    <a class="primary-color" href="{% url 'accounts:login' %}">Login</a>
-    <a class="primary-color" href="{% url 'accounts:signup' %}">SignUP</a>
-{% endif %}
+{% block content %}
+    This is A homepage
+    {% if not request.user.is_anonymous %}
+        Hello {{ request.user.name }}
+        <a class="primary-color" href="{% url 'accounts:user_dashboard' %}">User Dashboard</a>
+        <a class="primary-color" href="{% url 'accounts:logout' %}">Logout</a>
+    {% else %}
+        <a class="primary-color" href="{% url 'accounts:login' %}">Login</a>
+        <a class="primary-color" href="{% url 'accounts:signup' %}">SignUP</a>
+    {% endif %}
+{% endblock %}
+
+
 

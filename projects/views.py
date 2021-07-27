@@ -16,6 +16,7 @@ class ProjectCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('projects:project_dashboard')
 
     def form_valid(self, form):
+        import ipdb; ipdb.set_trace()
         self.object = form.save()
         self.object.created_by = self.request.user
         self.object.save()

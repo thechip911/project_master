@@ -1,5 +1,8 @@
 {% extends "base.html" %}
 <br>
+{% block pageheader %}
+   Time Sheet Dashboard
+{% endblock %}
 {% block content %}
     <br>
     <table border="color:black">
@@ -9,6 +12,7 @@
             <th>Start Time</th>
             <th>End Time</th>
             <th>Duration</th>
+            <th>Created By</th>
             <th>Created</th>
         </tr>
         {% for time_sheet in time_sheet_list %}
@@ -20,6 +24,7 @@
                 <td>{{ time_sheet.start_time }}</td>
                 <td>{{ time_sheet.end_time }}</td>
                 <td>{{ time_sheet.duration }}</td>
+                <td>{{ time_sheet.created_by.name }}</td>
                 <td>{{ time_sheet.created }}</td>
             </tr>
         {% endfor %}
