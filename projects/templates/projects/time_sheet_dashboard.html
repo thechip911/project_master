@@ -5,6 +5,10 @@
 {% endblock %}
 {% block content %}
     <br>
+    <div>
+    <br> <a href="{% url 'projects:time_sheet_create' %}">Task Sheet Create</a>
+    </div>
+    <div>
     <table border="color:black">
         <tr>
             <th>Project Name</th>
@@ -29,4 +33,5 @@
             </tr>
         {% endfor %}
     </table>
+    </div>
 {% endblock %}

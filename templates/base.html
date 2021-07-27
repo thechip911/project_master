@@ -48,15 +48,9 @@
         <a href="{% url 'accounts:logout' %}">Hello {{ request.user.name }} Logout</a>
         <br> <a href="{% url 'accounts:user_dashboard' %}">User Dashboard</a>
         <br> <a href="{% url 'pages:homepage' %}">HomePage</a>
-        <br> <a href="{% url 'projects:project_dashboard' %}">Project Dashboard</a>
-
-        {% if request.user.is_admin or request.user.is_superuser %}
-            <br> <a href="{% url 'projects:project_create' %}">Project Create</a>
-            <br> <a href="{% url 'projects:task_create' %}">Task Create</a>
-        {% endif %}
-        <br> <a href="{% url 'projects:task_dashboard' %}">Task DashBoard</a>
-        <br> <a href="{% url 'projects:time_sheet_create' %}">Task Sheet Create</a>
-        <br> <a href="{% url 'projects:time_sheet_dashboard' %}">Task Sheet DashBoard</a>
+        <br> <a href="{% url 'projects:project_dashboard' %}">Projects</a>
+        <br> <a href="{% url 'projects:task_dashboard' %}">Tasks</a>
+        <br> <a href="{% url 'projects:time_sheet_dashboard' %}">Task Sheet</a>
     {% else %}
         <br> <a href="{% url 'accounts:signup' %}">SignUP</a>
         <br> <a href="{% url 'accounts:login' %}"> Please Login</a>

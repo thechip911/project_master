@@ -20,6 +20,11 @@ class Project(models.Model):
         null=True
     )
 
+    project_admin = models.ManyToManyField(
+        "accounts.User",
+        related_name="project_admin",
+    )
+
     team = models.ManyToManyField(
         User,
         related_name="project_team",

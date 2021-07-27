@@ -5,28 +5,44 @@
 {% endblock %}
 {% block content %}
     <br>
-    <table border="color:black">
-        <tr>
-            <th>Project Name</th>
-            <th>Created By</th>
-            <th>Created</th>
-            {% if request.user.is_admin or request.user.is_superuser %}
-                <th>Delete</th>
-            {% endif %}
-        </tr>
-        {% for project in project_list %}
+    {% if request.user.is_superuser %}
+        <div>
+            <br> <a href="{% url 'projects:project_create' %}">Project Create</a>
+        </div>
+    {% endif %}
+    <div>
+        <table border="color:black">
             <tr>
-                {% if request.user.is_admin or request.user.is_superuser %}
-                    <td><a href="{% url "projects:project_update" project.id %}">{{ project.name }}</a></td>
-                {% else %}
-                    <td>{{ project.name }}</td>
-                {% endif %}
-                <td>{{ project.created_by.name }}</td>
-                <td>{{ project.created }}</td>
-                {% if request.user.is_admin or request.user.is_superuser %}
-                    <td><a href="{% url "projects:project_delete" project.id %}">Delete</a></td>
+                <th>Project Name</th>
+                <th>Created By</th>
+                <th>Created</th>
+                <th>Team</th>
+                {% if request.user.is_superuser %}
+                    <th>Delete</th>
+                    <th>Edit</th>
                 {% endif %}
             </tr>
-        {% endfor %}
-    </table>
+            {% for project in project_list %}
+                <tr>
+                    {% if request.user.is_superuser %}
+                        <td>{{ project.name }}</td>
+                    {% else %}
+                        <td>{{ project.name }}</td>
+                    {% endif %}
+                    <td>{{ project.created_by.name }}</td>
+                    <td>{{ project.created }}</td>
+                    <td>
+                        {% for member in project.team.all %}
+                            {{ forloop.counter }} {{ member.name }} <br>
+                        {% endfor %}
+                    </td>
+                    {% if request.user.is_superuser %}
+                        <td><a href="{% url "projects:project_delete" project.id %}">Delete</a></td>
+                        <td><a href="{% url "projects:project_update" project.id %}">Edit</a></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
 {% endblock %}

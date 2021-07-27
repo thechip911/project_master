@@ -44,13 +44,19 @@
             <small class="form-text text-muted">Please Enter the Project name</small>
         </div>
         <div class="form-group">
+            <label> Project Admin
+                {{ form.project_admin }}
+            </label>
+            <small class="form-text text-muted">Please Select Project Admin</small>
+        </div>
+        <div class="form-group">
             <label> Project Team
                 {{ form.team }}
             </label>
             <small class="form-text text-muted">Please Select the team Memebrs</small>
         </div>
         <div class="form-group">
-            <label> Project Name
+            <label> Select to archive project
                 {{ form.is_archived }}
             </label>
             <small class="form-text text-muted">Please Select If You Want to Archive the Project</small>

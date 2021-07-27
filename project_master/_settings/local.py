@@ -11,9 +11,9 @@ ALLOWED_HOSTS = ['*']
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'project_management_local',
-        'USER': 'project_management_local',
-        'PASSWORD': 'project_management_local',
+        'NAME': 'product_master_local',
+        'USER': 'product_master_local',
+        'PASSWORD': 'product_master_local',
         'HOST': 'localhost',
         'PORT': '5432',
     }

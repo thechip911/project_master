@@ -15,9 +15,13 @@ class ProjectCreateView(LoginRequiredMixin, CreateView):
     template_name = 'projects/project_create.html'
     success_url = reverse_lazy('projects:project_dashboard')
 
+    def get_form_kwargs(self):
+        kwargs = super(ProjectCreateView, self).get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
+
     def form_valid(self, form):
         self.object = form.save()
-        self.object.created_by = self.request.user
         self.object.save()
         return super(ProjectCreateView, self).form_valid(form)
 
@@ -51,6 +55,11 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
     form_class = TaskCreateForm
     template_name = 'projects/task_create.html'
     success_url = reverse_lazy('projects:task_dashboard')
+
+    def get_form_kwargs(self):
+        kwargs = super(TaskCreateView, self).get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
 
     def form_valid(self, form):
         self.object = form.save()
@@ -127,10 +136,12 @@ class ProjectDashBoard(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user = self.request.user
-        if user.is_superuser or user.is_admin:
+        if user.is_superuser:
             context['project_list'] = Project.objects.all()
-        elif self.request.user.is_employee:
+        elif user.is_employee:
             context['project_list'] = Project.objects.filter(team__in=[user])
+        elif user.is_admin:
+            context['project_list'] = Project.objects.filter(project_admin__in=[user])
         else:
             pass
 
@@ -143,10 +154,12 @@ class TaskDashBoard(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user = self.request.user
-        if user.is_superuser or user.is_admin:
+        if user.is_superuser:
             context['task_list'] = Task.objects.all()
-        elif self.request.user.is_employee:
+        elif user.is_employee:
             context['task_list'] = Task.objects.filter(assigned_to=user)
+        elif user.is_admin:
+            context['task_list'] = Task.objects.filter(project__project_admin__in=[user])
         else:
             pass
 
@@ -159,7 +172,7 @@ class TimeSheetDashBoard(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user = self.request.user
-        if user.is_superuser or user.is_admin:
+        if user.is_superuser:
             context['time_sheet_list'] = TimeSheet.objects.all()
         elif self.request.user.is_employee:
             context['time_sheet_list'] = TimeSheet.objects.filter(created_by=user)

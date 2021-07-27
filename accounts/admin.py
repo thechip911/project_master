@@ -8,4 +8,4 @@ User = get_user_model()
 
 @admin.register(User)
 class User(admin.ModelAdmin):
-    list_display = ['name', 'email']
+    list_display = ['sys_id', 'name', 'email']

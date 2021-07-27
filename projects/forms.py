@@ -12,17 +12,25 @@ class ProjectCreateForm(forms.ModelForm):
         model = Project
         fields = (
             'name',
+            'project_admin',
             'team',
             'is_archived',
         )
+
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop("request", None)
+        super(ProjectCreateForm, self).__init__(*args, **kwargs)
+        # self.fields["task"].queryset = Task.objects.filter(assigned_to=self.request_user)
 
     def clean(self):
         cleaned_data = super(ProjectCreateForm, self).clean()
         return cleaned_data
 
     def save(self, commit=True):
+        request = self.request
         project = super().save(commit=False)
         if commit:
+            project.created_by = request.user
             project.save()
             self.save_m2m()
         return project
@@ -42,6 +50,11 @@ class TaskCreateForm(forms.ModelForm):
             'task_priority',
             'is_archived',
         )
+
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop("request", None)
+        super(TaskCreateForm, self).__init__(*args, **kwargs)
+        self.fields["project"].queryset = Project.objects.filter(project_admin__in=[self.request.user])
 
     def clean(self):
         cleaned_data = super(TaskCreateForm, self).clean()
