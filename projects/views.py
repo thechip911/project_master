@@ -16,7 +16,6 @@ class ProjectCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('projects:project_dashboard')
 
     def form_valid(self, form):
-        import ipdb; ipdb.set_trace()
         self.object = form.save()
         self.object.created_by = self.request.user
         self.object.save()
@@ -142,7 +141,6 @@ class TaskDashBoard(LoginRequiredMixin, TemplateView):
     template_name = 'projects/task_dashboard.html'
 
     def get_context_data(self, **kwargs):
-        # import ipdb; ipdb.set_trace()
         context = super().get_context_data(**kwargs)
         user = self.request.user
         if user.is_superuser or user.is_admin:
