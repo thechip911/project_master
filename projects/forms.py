@@ -53,7 +53,7 @@ class TaskCreateForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop("request", None)
         super(TaskCreateForm, self).__init__(*args, **kwargs)
-        if self.request.user.is_admin:
+        if self.request and self.request.user.is_admin:
             self.fields["project"].queryset = Project.objects.filter(project_admin__in=[self.request.user])
 
     def clean(self):

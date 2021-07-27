@@ -9,9 +9,11 @@
             <br> <a href="{% url 'projects:project_create' %}">Project Create</a>
         </div>
     {% endif %}
-    <div>
-        <br> <a href="{% url 'projects:task_create' %}">Task Create</a>
-    </div>
+    {% if request.user.is_admin or request.user.is_superuser %}
+        <div>
+            <br> <a href="{% url 'projects:task_create' %}">Task Create</a>
+        </div>
+    {% endif %}
     <div>
         <table border="color:black">
             <tr>

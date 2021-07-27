@@ -48,8 +48,9 @@
                 <th>Assigned To</th>
                 {% if request.user.is_admin or request.user.is_superuser %}
                     <th>Delete</th>
+                    <th>Edit</th>
                 {% endif %}
-                <th>Edit</th>
+
             </tr>
             {% for task in task_list %}
                 <tr>
@@ -66,8 +67,9 @@
                     {% endfor %}</td>
                     {% if request.user.is_admin or request.user.is_superuser %}
                         <td><a href="{% url "projects:task_delete" task.id %}">Delete</a></td>
+                        <td><a href="{% url "projects:task_update" task.id %}">Edit</a></td>
                     {% endif %}
-                    <td><a href="{% url "projects:task_update" task.id %}">Edit</a></td>
+
                 </tr>
             {% endfor %}
         </table>
