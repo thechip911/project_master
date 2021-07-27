@@ -49,6 +49,19 @@
     </form>
 
     <script>
+        $('#timePicker').datetimepicker({
+            // dateFormat: 'dd-mm-yy',
+            format: 'DD/MM/YYYY HH:mm:ss',
+            minDate: getFormattedDate(new Date())
+        });
+
+        function getFormattedDate(date) {
+            const day = date.getDate();
+            const month = date.getMonth() + 1;
+            const year = date.getFullYear().toString().slice(2);
+            return day + '-' + month + '-' + year;
+        }
+
         $(function () {
             $("#id_due_date").datetimepicker({
                 format: 'd/m/Y H:i',
