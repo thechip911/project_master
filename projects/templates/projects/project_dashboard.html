@@ -4,12 +4,14 @@
     Project Dashboard
 {% endblock %}
 {% block content %}
-    <br>
     {% if request.user.is_superuser %}
         <div>
             <br> <a href="{% url 'projects:project_create' %}">Project Create</a>
         </div>
     {% endif %}
+    <div>
+        <br> <a href="{% url 'projects:task_create' %}">Task Create</a>
+    </div>
     <div>
         <table border="color:black">
             <tr>
@@ -24,11 +26,7 @@
             </tr>
             {% for project in project_list %}
                 <tr>
-                    {% if request.user.is_superuser %}
-                        <td>{{ project.name }}</td>
-                    {% else %}
-                        <td>{{ project.name }}</td>
-                    {% endif %}
+                    <td><a href="{% url 'projects:project_detail' project.id %}">{{ project.name }}</a></td>
                     <td>{{ project.created_by.name }}</td>
                     <td>{{ project.created }}</td>
                     <td>

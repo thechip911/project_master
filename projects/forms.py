@@ -20,7 +20,6 @@ class ProjectCreateForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop("request", None)
         super(ProjectCreateForm, self).__init__(*args, **kwargs)
-        # self.fields["task"].queryset = Task.objects.filter(assigned_to=self.request_user)
 
     def clean(self):
         cleaned_data = super(ProjectCreateForm, self).clean()
@@ -54,7 +53,8 @@ class TaskCreateForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop("request", None)
         super(TaskCreateForm, self).__init__(*args, **kwargs)
-        self.fields["project"].queryset = Project.objects.filter(project_admin__in=[self.request.user])
+        if self.request.user.is_admin:
+            self.fields["project"].queryset = Project.objects.filter(project_admin__in=[self.request.user])
 
     def clean(self):
         cleaned_data = super(TaskCreateForm, self).clean()

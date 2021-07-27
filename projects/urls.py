@@ -2,7 +2,8 @@
 from django.urls import path
 
 # app label
-from projects.views import ProjectCreateView, ProjectDashBoard, ProjectDeleteView, ProjectUpdateView, TaskCreateView, \
+from projects.views import ProjectCreateView, ProjectDashBoard, ProjectDeleteView, ProjectDetailView, ProjectUpdateView, \
+    TaskCreateView, \
     TaskDashBoard, \
     TaskDeleteView, TaskUpdateView, TimeSheetCreateView, \
     TimeSheetDashBoard, TimeSheetUpdateView
@@ -16,6 +17,7 @@ urlpatterns = [
     path('<int:pk>/update/', ProjectUpdateView.as_view(), name='project_update'),
     path('project_dashboard/', ProjectDashBoard.as_view(), name='project_dashboard'),
     path('<int:pk>/delete/', ProjectDeleteView.as_view(), name='project_delete'),
+    path('<int:pk>/detail/', ProjectDetailView.as_view(), name='project_detail'),
 
     path('task_create/', TaskCreateView.as_view(), name='task_create'),
     path('task/<int:pk>/update/', TaskUpdateView.as_view(), name='task_update'),

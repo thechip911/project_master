@@ -1,7 +1,7 @@
 # Create your views here.
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DeleteView, TemplateView, UpdateView
+from django.views.generic import CreateView, DeleteView, DetailView, TemplateView, UpdateView
 
 from projects.forms import ProjectCreateForm, TaskCreateForm, TimeSheetCreateForm
 from projects.models import Project, Task, TimeSheet
@@ -46,6 +46,17 @@ class ProjectDeleteView(LoginRequiredMixin, DeleteView):
 
     def get(self, request, *args, **kwargs):
         return self.post(self, request, *args, **kwargs)
+
+
+class ProjectDetailView(LoginRequiredMixin, DetailView):
+    model = Project
+    template_name = 'projects/project_detail_view.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ProjectDetailView, self).get_context_data(**kwargs)
+        context['project'] = Project.objects.get(id=context['object'].id)
+        context['task_list'] = Task.objects.filter(project_id=context['object'].id)
+        return context
 
 
 class TaskCreateView(LoginRequiredMixin, CreateView):
