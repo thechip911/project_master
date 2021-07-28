@@ -6,7 +6,85 @@
 {% endblock %}
 
 {% block content %}
+    <div>
+        Tadays Task <br>
+        <table border="color:black">
+            <tr>
+                <th>Task Name</th>
+                <th>Due Date</th>
+                <th>Task Status</th>
+                <th>Task Priority</th>
+                <th>Total Task Duration</th>
+                <th>Created By</th>
+                <th>Project Name</th>
+                <th>Created</th>
+                <th>Assigned To</th>
+                {% if request.user.is_admin or request.user.is_superuser %}
+                    <th>Delete</th>
+                    <th>Edit</th>
+                {% endif %}
 
-    Toady {{ task_due_today }} <br>
-    Up {{ upcoming_task }}
+            </tr>
+            {% for task in task_due_today %}
+                <tr>
+                    <td>{{ task.name }}</td>
+                    <td>{{ task.due_date }}</td>
+                    <td>{{ task.get_task_status_display }}</td>
+                    <td>{{ task.get_task_priority_display }}</td>
+                    <td>{{ task.total_task_time }}</td>
+                    <td>{{ task.created_by.name }}</td>
+                    <td>{{ task.project.name }}</td>
+                    <td>{{ task.created }}</td>
+                    <td>{% for i in task.assigned_to.all %}
+                        {{ forloop.counter }}. {{ i.name }}<br>
+                    {% endfor %}</td>
+                    {% if request.user.is_admin or request.user.is_superuser %}
+                        <td><a href="{% url "projects:task_delete" task.id %}">Delete</a></td>
+                        <td><a href="{% url "projects:task_update" task.id %}">Edit</a></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <br>
+    <div>
+        Upcoming <br>
+        <table border="color:black">
+            <tr>
+                <th>Task Name</th>
+                <th>Due Date</th>
+                <th>Task Status</th>
+                <th>Task Priority</th>
+                <th>Total Task Duration</th>
+                <th>Created By</th>
+                <th>Project Name</th>
+                <th>Created</th>
+                <th>Assigned To</th>
+                {% if request.user.is_admin or request.user.is_superuser %}
+                    <th>Delete</th>
+                    <th>Edit</th>
+                {% endif %}
+
+            </tr>
+            {% for task in upcoming_task %}
+                <tr>
+                    <td>{{ task.name }}</td>
+                    <td>{{ task.due_date }}</td>
+                    <td>{{ task.get_task_status_display }}</td>
+                    <td>{{ task.get_task_priority_display }}</td>
+                    <td>{{ task.total_task_time }}</td>
+                    <td>{{ task.created_by.name }}</td>
+                    <td>{{ task.project.name }}</td>
+                    <td>{{ task.created }}</td>
+                    <td>{% for i in task.assigned_to.all %}
+                        {{ forloop.counter }}. {{ i.name }}<br>
+                    {% endfor %}</td>
+                    {% if request.user.is_admin or request.user.is_superuser %}
+                        <td><a href="{% url "projects:task_delete" task.id %}">Delete</a></td>
+                        <td><a href="{% url "projects:task_update" task.id %}">Edit</a></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
 {% endblock %}
