@@ -26,12 +26,11 @@ class UserDashBoard(LoginRequiredMixin, TemplateView):
             context['task_due_today'] = Task.objects.filter(due_date__date=localtime().date()).exclude(task_status='done')
             context['upcoming_task'] = Task.objects.filter(due_date__date__gte=localtime().date()).exclude(task_status='done')
         elif user.is_admin:
-            context['task_due_today'] = Task.objects.filter(project__project_admin__in=[user], due_date__date=localtime().date()).exclude(
-                task_status='done')
+            context['task_due_today'] = Task.objects.filter(project__project_admin__in=[user], due_date__date=localtime().date()).exclude(task_status='done')
             context['upcoming_task'] = Task.objects.filter(project__project_admin__in=[user], due_date__date__gte=localtime().date()).exclude(task_status='done')
         elif user.is_employee:
-            context['task_due_today'] = Task.objects.filter(project__team__in=[user], due_date__date=localtime().date()).exclude(task_status='done')
-            context['upcoming_task'] = Task.objects.filter(project__team__in=[user], due_date__date__gte=localtime().date() + timedelta(days=1)).exclude(task_status='done')
+            context['task_due_today'] = Task.objects.filter(assigned_to__in=[user], due_date__date=localtime().date()).exclude(task_status='done')
+            context['upcoming_task'] = Task.objects.filter(assigned_to__in=[user], due_date__date__gte=localtime().date() + timedelta(days=1)).exclude(task_status='done')
         return context
 
 
